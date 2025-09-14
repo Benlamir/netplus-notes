@@ -1,0 +1,10 @@
+# Subnetting Speed Drill
+Date: 2025-09-14
+Problems: 20
+Time: 16 minutes
+Score: 10/20
+
+Notes:
+- Got tripped on broadcasts vs last usable (need to double-check next subnet − 1 rule).
+- Private IP ranges need to be memorized.
+- Stronger on hosts per subnet (/25, /26, /30).
