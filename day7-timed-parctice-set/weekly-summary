@@ -1,0 +1,20 @@
+Weekly Summary – Day 7
+
+What clicked this week:
+This week, I started to connect the dots on several networking concepts. Subnetting practice is beginning to feel more natural — I can now calculate usable ranges, broadcast addresses, and subnet sizes without panicking. Security models also started to make sense: I now understand the differences between Security Groups, ACLs/NSLs, and how they map to AWS concepts.
+
+What’s still fuzzy:
+I heve difficulty remebring ports numbers. I also need to reinforce the difference between stateful (Security Groups/NSGs) and stateless (ACLs/NSLs) controls. Some ports and protocols (like remembering Telnet authentication vs SSH encryption) still confuse me.
+
+Plan to fix it next week:
+I will focus on weak areas by:
+
+Reviewing cheat sheets on cloud deployment models and security controls.
+
+Practicing 25–50 more questions with focus on ports and OSI layers.
+
+Writing short one-liner notes for confusing topics (e.g., “Telnet = plaintext SSH”).
+
+adding flashracrds for port numbers.
+
+Pushing all notes/screenshots to GitHub to track progress.
