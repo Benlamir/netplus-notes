@@ -1,0 +1,80 @@
+
+What problem does this solve? attacker flood the switch with random MACs to force the switch to broadcast trafic to all devices on the network, the switch is turned into a hub
+
+Key terms & 1-liners:-
+- CAM table: switch memory of MACs
+- each device have a unique MAC
+
+How its done:
+an attacker sends a huge number of frames with fake/unique source MAC addresses to fill the CAM table. When the CAM table is full or overwhelmed, the switch can no longer learn new MAC→port mappings reliably and may fail open — i.e., it starts flooding frames out all ports (behaving like a hub). That lets the attacker sniff traffic for other hosts on the same VLAN.
+
+Detection signs:
+High rate of MAC table churn — many MACs learned then aged out quickly.
+
+MAC flapping warnings/logs (same MAC appearing on different ports repeatedly).
+
+Unexplained traffic sniffing alerts or many hosts suddenly receiving broadcasts they normally don’t.
+
+CPU or forwarding performance drops on the switch.
+
+Unusual syslog/SNMP alerts (if you monitor MAC-table size changes).
+
+
+
+
+Practical mitigations (what to configure)
+
+These are defensive configs you should learn and apply:
+
+Port Security
+
+Limit the number of MACs allowed per access port (e.g., maximum 1–2).
+
+Use sticky MAC where possible so the switch learns and sticks the legitimate MAC.
+
+Configure the port action on violation (shutdown or restrict) rather than simply logging.
+
+Disable unused ports and place them in an isolated VLAN before enabling them if needed.
+
+Storm control / broadcast suppression
+
+Throttle excessive broadcast/multicast floods to protect CPU/forwarding.
+
+802.1X (port-based access control)
+
+Require authentication for devices before normal Layer-2 access.
+
+VLAN segmentation / Private VLANs
+
+Keep untrusted devices in separate restricted VLANs.
+
+DHCP snooping + Dynamic ARP Inspection (DAI)
+
+These limit ARP/DHCP-based malicious activity which often pairs with layer-2 attacks.
+
+Logging & monitoring
+
+Monitor MAC learning rates, MAC table usage, and set alerts via syslog/SNMP/NetFlow.
+
+Track MAC flapping and unusual port activity.
+
+Switch firmware & features
+
+Use hardware that supports CAM limits, secure defaults, and port-security features.
+
+
+
+
+How to practice safely in a lab (legal & educational)
+
+Do this only in a controlled lab you own (Packet Tracer, GNS3, EVE-NG, or real lab switches you control).
+
+Set up topology: a switch, an attacker host (VM), a victim host (VM), a management host. Put them in the same VLAN.
+
+Baseline: observe the CAM table, normal traffic, and verify reachability between hosts.
+
+Enable defensive settings (port security, storm control, 802.1X if supported) on the access ports. Confirm expected behavior for normal multi-host scenarios.
+
+Simulate load safely: use traffic-generator functionality inside the lab to create many source MACs only as a lab exercise (or simply connect many VMs). The objective is to observe how the switch reacts and how your port security and monitoring catch it — do not attempt this on any production network.
+
+Record logs & alerts: check syslog, SNMP traps, and MAC-table stats to learn detection signals.
